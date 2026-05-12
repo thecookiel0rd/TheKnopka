@@ -21,12 +21,12 @@
 
 ## Установка и запуск
 
+
 ### Способ 1: Локальный запуск (без Docker)
 
 ```bash
-# Клонирование проекта
-git clone <repository-url>
-cd websocket-status
+git clone https://github.com/thecookiel0rd/TheKnopka.git
+cd TheKnopka
 
 # Создание виртуального окружения (опционально)
 # python -m venv venv
@@ -51,11 +51,9 @@ docker run -d -p 5000:5000 pos61/the_knopka:latest
 ### Способ 3: Docker Compose
 
 ```bash
-mkdir knopka
-cd knopka
-
-docker-compose up -d
-
+git clone https://github.com/thecookiel0rd/TheKnopka.git
+cd TheKnopka
+docker compose up -d
 ```
 
 ## Использование
@@ -77,31 +75,11 @@ curl http://localhost:5000/knopka_off
 **Получить текущий статус:**
 ```bash
 curl http://localhost:5000/status
-# Ответ: Статус: ON
 ```
 
 ### Веб-интерфейс
 
 Откройте в браузере `http://localhost:5000/` для просмотра страницы. Статус будет автоматически обновляться при изменении.
 
-## WebSocket события
-
-### События клиента → сервер
-
-| Событие | Описание |
-|---------|----------|
-| `connect` | Клиент подключается к серверу |
-
-### События сервера → клиент
-
-| Событие | Данные | Описание |
-|---------|--------|----------|
-| `status_update` | `{"status": "ON"}` или `{"status": "OFF"}` | Обновление статуса |
-
-
-## Требования
-
-- Python 3.11+
-- Docker (опционально)
 
 
