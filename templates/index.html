@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="status-box">
+            <h1>Статус: <span id="status" class="status-unknown">unknown</span></h1>
+        </div>
+        <div class="info">
+            <p>Управление статусом:</p>
+            <ul>
+                <li><code>/knopka_on</code> - включить</li>
+                <li><code>/knopka_off</code> - выключить</li>
+            </ul>
+        </div>
+        <div class="connection-status">
+            <span id="connection">● Отключено</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        const statusElement = document.getElementById('status');
+        const connectionElement = document.getElementById('connection');
+        
+        // Подключение к WebSocket
+        const socket = io();
+        
+        socket.on('connect', () => {
+            connectionElement.textContent = '● Подключено';
+            connectionElement.className = 'connected';
+        });
+        
+        socket.on('disconnect', () => {
+            connectionElement.textContent = '● Отключено';
+            connectionElement.className = 'disconnected';
+        });
+        
+        socket.on('status_update', (data) => {
+            statusElement.textContent = data.status;
+            
+            // Обновляем цвет статуса
+            statusElement.className = '';
+            if (data.status === 'ON') {
+                statusElement.classList.add('status-on');
+            } else if (data.status === 'OFF') {
+                statusElement.classList.add('status-off');
+            } else {
+                statusElement.classList.add('status-unknown');
+            }
+        });
+    </script>
+</body>
+</html>
