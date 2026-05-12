@@ -1,0 +1,7 @@
+services:
+  websocket-status:
+    image: pos61/the_knopka:latest
+    container_name: button-app
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
